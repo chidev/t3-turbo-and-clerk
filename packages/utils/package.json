@@ -1,0 +1,67 @@
+{
+  "name": "utils",
+  "description": "A collection of utility methods and react hooks.",
+  "version": "0.3.0",
+  "author": "Anthony Hastings <ar.hastings@gmail.com> (https://anthonyhastings.github.io/)",
+  "repository": {
+    "directory": "packages/utils",
+    "type": "git",
+    "url": "https://github.com/anthonyhastings/turborepo-design-system.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "exports": {
+    "./src": "./src/index.ts",
+    "./src/strings": "./src/strings.ts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./strings": {
+      "types": "./dist/strings.d.ts",
+      "import": "./dist/strings.js",
+      "require": "./dist/strings.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir dist",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "lint": "TIMING=1 eslint --ext .ts,.tsx src/",
+    "test": "jest",
+    "types:check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^28.1.7",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "@vitejs/plugin-react-swc": "^3.2.0",
+    "config-prettier": "*",
+    "config-tsconfig": "*",
+    "eslint": "^8.15.0",
+    "eslint-config-sensor": "*",
+    "jest": "^28.1.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-test-renderer": "^18.1.0",
+    "ts-jest": "^28.0.8",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.5.4",
+    "vite": "^4.1.2"
+  }
+}

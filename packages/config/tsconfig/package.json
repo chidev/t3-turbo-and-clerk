@@ -1,0 +1,11 @@
+{
+  "name": "config-tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "base.json",
+    "node16.json",
+    "react-library.json"
+  ]
+}

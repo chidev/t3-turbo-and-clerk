@@ -20,6 +20,9 @@ out/
 .expo/
 dist/
 
+#docs
+storybook-static/
+
 # production
 build
 

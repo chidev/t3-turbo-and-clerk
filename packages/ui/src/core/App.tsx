@@ -1,6 +1,23 @@
-import { AppShell } from '@saas-ui/react';
+import {
+  IconButton,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+} from '@chakra-ui/react';
+import { AppShell, PersonaAvatar } from '@saas-ui/react';
+import {
+  Sidebar,
+  SidebarSection,
+  SidebarToggleButton,
+  SidebarOverlay,
+  NavGroup,
+  NavItem,
+} from '@saas-ui/sidebar';
 
-export const App = () => {
+export const App = ({ children }) => {
   <AppShell
     sidebar={
       <Sidebar>
@@ -37,5 +54,7 @@ export const App = () => {
         </SidebarSection>
       </Sidebar>
     }
-  />;
+  >
+    {children}
+  </AppShell>;
 };
