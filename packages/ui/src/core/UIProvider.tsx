@@ -1,5 +1,5 @@
 import { SaasProvider, LinkProps } from '@saas-ui/react';
-import { theme } from '../theme';
+import { theme } from '../utils/theme';
 
 export const UIProvider = ({ children, NextLink }: any) => {
   const Link: React.FC<LinkProps> = (props) => {
