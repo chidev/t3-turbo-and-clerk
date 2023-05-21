@@ -1,3 +1,8 @@
+import { GetServerSideProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import { getAuth } from "@clerk/nextjs/server";
+
 import { SignIn } from "@clerk/nextjs";
 
 const SignInPage = () => (
@@ -13,4 +18,30 @@ const SignInPage = () => (
   </main>
 );
 
+SignInPage.noLayout = true;
+
 export default SignInPage;
+
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const { userId } = getAuth(context.req);
+
+  const translateProps = await serverSideTranslations(context.locale ?? "en", [
+    "common",
+  ]);
+
+  if (!!userId) {
+    return {
+      props: {},
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      ...translateProps,
+    },
+  };
+};

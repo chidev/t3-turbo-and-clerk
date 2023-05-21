@@ -1,4 +1,10 @@
-import { GitHubBanner, Refine } from '@refinedev/core';
+import {
+  AuthBindings,
+  GitHubBanner,
+  I18nProvider,
+  Refine,
+  RefineProps,
+} from '@refinedev/core';
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 import {
   notificationProvider,
@@ -21,7 +27,6 @@ import { useLocalStorage } from '@mantine/hooks';
 // import { NotificationsContainer } from '@mantine/notifications';
 import { dataProvider } from '@refinedev/supabase';
 // import { appWithTranslation, useTranslation } from 'next-i18next';
-import { authProvider } from '../utils/authProvider';
 import { AppIcon } from '../components/app-icon';
 import { supabaseClient } from '../utils';
 
@@ -31,9 +36,18 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
+  useAuthProvider: () => [AuthBindings, JSX.Element];
+  i18nProvider: I18nProvider;
 };
 
-export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+export const App = ({
+  Component,
+  pageProps,
+  useAuthProvider,
+  i18nProvider,
+}: AppPropsWithLayout) => {
+  const [authProvider, userAvatar] = useAuthProvider();
+
   const renderComponent = () => {
     if (Component.noLayout) {
       return <Component {...pageProps} />;
@@ -41,7 +55,7 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
     return (
       <ThemedLayoutV2
-        Header={() => <Header sticky />}
+        Header={() => <Header sticky userAvatar={userAvatar} />}
         Title={({ collapsed }) => (
           <ThemedTitleV2
             collapsed={collapsed}
@@ -60,19 +74,12 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     defaultValue: 'light',
     getInitialValueInEffect: true,
   });
-  // const { t, i18n } = useTranslation();
+
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
-  const i18nProvider = {
-    translate: (key: string, params: object) => key, //t(key, params),
-    changeLocale: async (lang: string) => {}, //</>(lang: string) => i18n.changeLanguage(lang),
-    getLocale: () => 'en', //i18n.language,
-  };
-
   return (
     <>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ColorSchemeProvider
           colorScheme={colorScheme}
@@ -121,7 +128,7 @@ export const App = ({ Component, pageProps }: AppPropsWithLayout) => {
             >
               {renderComponent()}
               <RefineKbar />
-              <routerProvider.UnsavedChangesNotifier />
+              {/* <routerProvider.UnsavedChangesNotifier /> */}
             </Refine>
             {/* </NotificationsContainer> */}
           </MantineProvider>

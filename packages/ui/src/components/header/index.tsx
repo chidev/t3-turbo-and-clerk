@@ -9,30 +9,36 @@ import {
   Title,
   useMantineColorScheme,
   useMantineTheme,
-} from "@mantine/core";
-import { useGetIdentity, useGetLocale } from "@refinedev/core";
+} from '@mantine/core';
+import { useGetIdentity, useGetLocale, useLogout } from '@refinedev/core';
 import {
   HamburgerMenu,
   RefineThemedLayoutV2HeaderProps,
-} from "@refinedev/mantine";
-import { IconLanguage, IconMoonStars, IconSun } from "@tabler/icons";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React from "react";
+} from '@refinedev/mantine';
+import { IconLanguage, IconMoonStars, IconSun } from '@tabler/icons';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 interface IUser {
   name: string;
   avatar: string;
 }
 
-export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
+type SensorAppHeader = {
+  userAvatar: JSX.Element;
+} & RefineThemedLayoutV2HeaderProps;
+
+export const Header: React.FC<SensorAppHeader> = ({
   sticky,
+  userAvatar = null,
 }) => {
   const { data: user } = useGetIdentity<IUser>();
+  const { mutate: logout } = useLogout();
 
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
-  const dark = colorScheme === "dark";
+  const dark = colorScheme === 'dark';
   const borderColor = dark ? theme.colors.dark[6] : theme.colors.gray[2];
 
   const locale = useGetLocale();
@@ -63,7 +69,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
         align="center"
         justify="space-between"
         sx={{
-          height: "100%",
+          height: '100%',
         }}
       >
         <HamburgerMenu />
@@ -83,7 +89,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
                   component={Link}
                   href="/"
                   locale={lang}
-                  color={lang === currentLocale ? "primary" : undefined}
+                  color={lang === currentLocale ? 'primary' : undefined}
                   icon={
                     <Avatar
                       src={`/images/flags/${lang}.svg`}
@@ -92,7 +98,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
                     />
                   }
                 >
-                  {lang === "en" ? "English" : "German"}
+                  {lang === 'en' ? 'English' : 'German'}
                 </Menu.Item>
               ))}
             </Menu.Dropdown>
@@ -100,7 +106,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
 
           <ActionIcon
             variant="outline"
-            color={dark ? "yellow" : "primary"}
+            color={dark ? 'yellow' : 'primary'}
             onClick={() => toggleColorScheme()}
             title="Toggle color scheme"
           >
@@ -108,10 +114,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
           </ActionIcon>
 
           {(user?.name || user?.avatar) && (
-            <Group spacing="xs">
-              {user?.name && <Title order={6}>{user?.name}</Title>}
-              <Avatar src={user?.avatar} alt={user?.name} radius="xl" />
-            </Group>
+            <Group spacing="xs">{userAvatar}</Group>
           )}
         </Group>
       </Flex>

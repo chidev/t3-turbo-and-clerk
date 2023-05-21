@@ -35,6 +35,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11",
     "@mantine/carousel": "^6.0.10",
     "@mantine/core": "^6.0.10",

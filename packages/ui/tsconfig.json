@@ -1,6 +1,12 @@
 {
   "extends": "config-tsconfig/react-library.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx", "cypress/", "index.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "cypress/",
+    "index.tsx",
+    "../../apps/nextjs/src/utils/supabaseClient.ts"
+  ],
   "exclude": ["dist", "build", "node_modules"],
   "paths": {
     "@components/*": ["src/components/*"],
