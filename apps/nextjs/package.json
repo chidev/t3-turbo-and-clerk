@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "with-env": "dotenv -e ../../.env --",
-    "dev": "dev-next",
+    "dev": "pnpm run dev-next",
     "dev-next": "pnpm with-env next dev",
     "build": "next build",
     "clean": "rm -rf .next .turbo node_modules",
